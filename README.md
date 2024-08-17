@@ -1,2 +1,3 @@
 # seto
-Utility bridge HTTP server
+
+A HTTP server to bridge utilities via Unix domain socket.
