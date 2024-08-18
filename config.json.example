@@ -1,0 +1,9 @@
+{
+  "socketPath": "/tmp/seto.sock",
+  "browserCommand": [
+    "open",
+    "-a",
+    "Google Chrome"
+  ],
+  "codeRemoteArgument": "ssh-remote+test"
+}

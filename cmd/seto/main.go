@@ -2,10 +2,9 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"log"
 
-	"github.com/nonylene/seto/src"
+	"github.com/nonylene/seto/src/seto"
 )
 
 var configPath string
@@ -17,10 +16,10 @@ func init() {
 func main() {
 	flag.Parse()
 
-	cfg, err := src.ParseConfig(configPath)
+	cfg, err := seto.ParseConfig(configPath)
 	if err != nil {
 		log.Fatalf("Failed to parse config: %+v", err)
 	}
 
-	fmt.Printf("%+v", cfg)
+	log.Fatalf("%+v", seto.Serve(cfg))
 }
