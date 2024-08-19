@@ -21,3 +21,9 @@ $ curl --unix-socket {Socket path} http://localhost/healthCheck
 ### Setoc (client side)
 
 TBD
+
+## Build
+
+```
+$ go build -o build/seto cmd/seto/main.go
+```
