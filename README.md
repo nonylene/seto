@@ -2,6 +2,15 @@
 
 A HTTP server to bridge utilities via Unix domain socket.
 
+## Download (amd64)
+
+```
+$ cp config.json.example ${XDG_CONFIG_HOME}/seto/config.json
+$ curl https://github.com/nonylene/seto/releases/latest/download/seto -o seto
+$ chmod 755 seto
+$ seto
+```
+
 
 ## Development
 
