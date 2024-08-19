@@ -24,7 +24,7 @@ func execCode(cfg *Config, params *common.CodeParams) error {
 	if params.DevContainer {
 		// https://github.com/microsoft/vscode-remote-release/issues/2133
 		encoded := hex.EncodeToString([]byte(cleanedPath))
-		remote := "vscode-remote://dev-container+" + encoded
+		remote := "dev-container+" + encoded
 		if params.Remote {
 			remote += "@" + cfg.CodeRemoteArgument
 		}
