@@ -21,7 +21,7 @@ func execCode(cfg *Config, params *common.CodeParams) error {
 	command := []string{"code"}
 	cleanedPath := path.Clean(params.Path)
 
-	if !params.DevContainer {
+	if params.DevContainer {
 		// https://github.com/microsoft/vscode-remote-release/issues/2133
 		encoded := hex.EncodeToString([]byte(cleanedPath))
 		remote := "vscode-remote://dev-container+" + encoded
@@ -40,9 +40,9 @@ func execCode(cfg *Config, params *common.CodeParams) error {
 	}
 
 	log.Printf("exec-code: %s", strings.Join(command, " "))
-	err := exec.Command(command[0], command[1:]...).Run()
+	out, err := exec.Command(command[0], command[1:]...).CombinedOutput()
 	if err != nil {
-		return fmt.Errorf("failed to execute code: %w", err)
+		return fmt.Errorf("failed to execute code: %w\n%s", err, out)
 	}
 
 	return nil
@@ -55,9 +55,9 @@ func execBrowser(cfg *Config, params *common.BrowserParams) error {
 	command := append(cfg.BrowserCommand, url)
 
 	log.Printf("exec-browser: %s", strings.Join(command, " "))
-	err := exec.Command(command[0], command[1:]...).Run()
+	out, err := exec.Command(command[0], command[1:]...).CombinedOutput()
 	if err != nil {
-		return fmt.Errorf("failed to execute the browser: %w", err)
+		return fmt.Errorf("failed to execute code: %w\n%s", err, out)
 	}
 
 	return nil
