@@ -11,6 +11,14 @@ $ chmod 755 seto
 $ seto
 ```
 
+### SSH
+
+```
+Host host
+  RemoteForward {Full path for your socket file} {Remote sock file}
+```
+
+You may want to set `StreamLocalBindUnlink yes` on the remote server sshd config.
 
 ## Development
 
