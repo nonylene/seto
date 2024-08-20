@@ -1,6 +1,7 @@
 package seto
 
 import (
+	"context"
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
@@ -13,9 +14,22 @@ import (
 	"path"
 	"strings"
 	"syscall"
+	"time"
 
 	"github.com/nonylene/seto/src/common"
 )
+
+func execCommand(command []string) error {
+	log.Printf("exec: %s", strings.Join(command, " "))
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+	out, err := exec.CommandContext(ctx, command[0], command[1:]...).CombinedOutput()
+	if err != nil {
+		return fmt.Errorf("failed to execute command: %w\n%s", err, out)
+	}
+
+	return nil
+}
 
 func execCode(cfg *Config, params *common.CodeParams) error {
 	command := []string{"code"}
@@ -39,13 +53,7 @@ func execCode(cfg *Config, params *common.CodeParams) error {
 		}
 	}
 
-	log.Printf("exec-code: %s", strings.Join(command, " "))
-	out, err := exec.Command(command[0], command[1:]...).CombinedOutput()
-	if err != nil {
-		return fmt.Errorf("failed to execute code: %w\n%s", err, out)
-	}
-
-	return nil
+	return execCommand(command)
 }
 
 func execBrowser(cfg *Config, params *common.BrowserParams) error {
@@ -54,13 +62,7 @@ func execBrowser(cfg *Config, params *common.BrowserParams) error {
 
 	command := append(cfg.BrowserCommand, url)
 
-	log.Printf("exec-browser: %s", strings.Join(command, " "))
-	out, err := exec.Command(command[0], command[1:]...).CombinedOutput()
-	if err != nil {
-		return fmt.Errorf("failed to execute code: %w\n%s", err, out)
-	}
-
-	return nil
+	return execCommand(command)
 }
 
 func Serve(cfg *Config) error {
