@@ -11,7 +11,7 @@ import (
 	"net/url"
 	"os"
 	"os/exec"
-	"path"
+	"path/filepath"
 	"strings"
 	"syscall"
 	"time"
@@ -33,7 +33,7 @@ func execCommand(command []string) error {
 
 func execCode(cfg *Config, params *common.CodeParams) error {
 	command := []string{"code"}
-	cleanedPath := path.Clean(params.Path)
+	cleanedPath := filepath.Clean(params.Path)
 
 	if params.DevContainer {
 		// https://github.com/microsoft/vscode-remote-release/issues/2133
@@ -42,7 +42,7 @@ func execCode(cfg *Config, params *common.CodeParams) error {
 		if params.Remote {
 			remote += "@" + cfg.CodeRemoteArgument
 		}
-		workspacePath := path.Join("/workspaces", path.Base(cleanedPath))
+		workspacePath := filepath.Join("/workspaces", filepath.Base(cleanedPath))
 		// code {container path} --remote {contianer remote args}
 		command = append(command, workspacePath, "--remote", remote)
 	} else {

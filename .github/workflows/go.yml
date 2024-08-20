@@ -23,8 +23,11 @@ jobs:
     - name: Set up Go
       uses: actions/setup-go@v5
 
-    - name: Build
+    - name: Build seto
       run: go build -o build/seto ./cmd/seto/main.go
+
+    - name: Build setoc
+      run: go build -o build/setoc ./cmd/setoc/main.go
 
     - uses: actions/upload-artifact@v4
       with:
