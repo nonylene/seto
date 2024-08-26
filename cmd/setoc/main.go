@@ -73,10 +73,6 @@ func main() {
 	if len(os.Args) < 2 {
 		die()
 	}
-	flag.Usage = func() {
-		fmt.Print("aa")
-		flag.PrintDefaults()
-	}
 
 	subArgs := os.Args[2:]
 	var err error
